@@ -3,7 +3,9 @@ package com.plygrnd.andr.cmpse.basic
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,16 +19,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApp()
+            MyApp {
+                MyScreenContent()
+            }
         }
     }
 }
 
 @Composable
-fun MyApp() {
+fun MyApp(content: @Composable () -> Unit) {
     JetpackComposeBasicTheme {
         Surface(color = Color.Yellow) {
-            Greeting(name = "Android")
+            content()
         }
     }
 }
@@ -36,8 +40,20 @@ fun Greeting(name: String) {
     Text(text = "Hello $name!", modifier = Modifier.padding(16.dp))
 }
 
+// Sample 2 Layout
+@Composable
+fun MyScreenContent() {
+    Column {
+        Greeting(name = "Android")
+        Divider(color = Color.Black)
+        Greeting(name = "there")
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    MyApp()
+    MyApp {
+        MyScreenContent()
+    }
 }
